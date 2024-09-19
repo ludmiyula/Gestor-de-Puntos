@@ -45,7 +45,7 @@ function initCalendar() {  //para obtener los días del mes anterior y el mes ac
     let days = "";
 
     // dia del mes anterior
-    for(let x = days; x > 0; x--){
+    for(let x = day; x > 0; x--){
         days = `<div class="day prev-date"> ${prevDays - x + 1}</div>`;
     }
 
@@ -60,7 +60,7 @@ function initCalendar() {  //para obtener los días del mes anterior y el mes ac
     ) {
         days += `<div class= "day today" > ${i} </div>;`
     }
-    //agregar el reto tal como esta
+    //agregar el resto tal como esta
     else{
         days += `<div class="day"> ${i} </div>`;
     }
@@ -110,7 +110,7 @@ todayBtn.addEventListener("click",() => {
 dateInput.addEventListener("input",(e) => {
     //permitir solo números eliminar nada más
     dateInput.value = dateInput.value.replace(/[^0-9]/g, "");
-    if (dateInput.value.lenght === 2){
+    if (dateInput.value.lenght == 2){
         //agregue barra diagonal si ingresan demasiados números
         dateInput.value += "/";
     }
@@ -122,8 +122,8 @@ dateInput.addEventListener("input",(e) => {
     }
     //si eliminamos hasta que la barra no se elimine
 
-    if (e.inputType === "deleteContentBackward") {
-        if (dateInput.value.lenght === 3){
+    if (e.inputType == "deleteContentBackward") {
+        if (dateInput.value.lenght == 3){
             dateInput.value = dateInput.value.slice(0, 2);
         }
     }
@@ -134,9 +134,9 @@ gotoBtn.addEventListener("click", gotoDate);
 function gotoDate() {
     const dateArr = dateInput.value.split("/");
   //validar alguna fecha  
-    if(dateArr.lenght === 2){
-        if(dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].lenght === 4){
-            month === dateArr[0] -1;
+    if(dateArr.lenght == 2){
+        if(dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].lenght == 4){
+            month = dateArr[0] -1;
             year = dateArr[1];
             initCalendar();
             return;

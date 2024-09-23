@@ -225,6 +225,7 @@ background-color: #373c4f;
     align-items: center;
     justify-content: space-between;
     padding-left: 70px;
+    margin-top: 50px;
     margin-bottom:  20px;
     text-transform: capitalize;
 }
@@ -239,20 +240,19 @@ background-color: #373c4f;
 }
 .events {
     width: 100%;
-    padding: 4%;
     height: 100%;
     max-height: 600px;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    padding: 4px;
 }
 .events .event{
     position: relative;
     width:  95%;
     min-height: 70px;
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 5px;
@@ -261,4 +261,34 @@ background-color: #373c4f;
     color: #fff;
     cursor: pointer;
     background: linear-gradient(90deg, #3f4458, transparent);
+}
+.events .event:nth-child(event) {
+    background: transparent;
+}
+.events .event:hover {
+    background: linear-gradient(90deg, var(--primary-clr),transparent);
+}
+.events .event .title {
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+.events .event .title .event-title {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-left: 20px;
+}
+.events .event .title i {
+    color:  var(--primary-clr);
+    font-size: 0.5ren;
+}
+.events .event:hover .title i,
+.events .event:hover .event-time {
+    color: #fff;
+}
+.events .event .event-time {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #878895;
+    pointer-events: none;
 }

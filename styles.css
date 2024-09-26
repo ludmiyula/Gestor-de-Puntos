@@ -26,7 +26,7 @@ border-radius: 10px;
 background-color: #373c4f;
 }
 .left {
-    width: 70%;
+    width: 60%;
     padding: 20%;
 }
 .calendar {
@@ -225,7 +225,7 @@ background-color: #373c4f;
     align-items: center;
     justify-content: space-between;
     padding-left: 70px;
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom:  20px;
     text-transform: capitalize;
 }
@@ -234,8 +234,8 @@ background-color: #373c4f;
     font-weight: 500;
 }
 .today-date .event-date{
-    font-size: 1 rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 500;
     color: #878895;
 }
 .events {
@@ -290,5 +290,22 @@ background-color: #373c4f;
     font-size: 0.8rem;
     font-weight: 400;
     color: #878895;
+    margin-left: 15px;
     pointer-events: none;
+}
+.event::after{
+    content: " √";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    font-size: 3rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+    color: var(--primary-clr);
+    transform: translateY(-50%);
+}
+.event:hover::after {
+    display: flex;
 }

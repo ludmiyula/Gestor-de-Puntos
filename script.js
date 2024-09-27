@@ -145,3 +145,6 @@ function gotoDate() {
     }
     alert("invalid date");
 }
+const addEventBtn = document.querySelector(".add-event"),
+  addEvenConteiner = document.querySelector(".add-event-wrapper"),
+  addEventCloseBtn = document.querySelector(".close");

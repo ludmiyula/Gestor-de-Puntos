@@ -1,11 +1,14 @@
 const calendar = document.querySelector(".calendar"),
    date = document.querySelector(".date"),
    daysContainer = document.querySelector(".days"),
-   prev = document.querySelector(".prev");
-(next = document.querySelector(".next"));
-   (todayBtn = document.querySelector(".today-btn"));
-   (gotoBtn = document.querySelector(".goto-btn"));
-   (dateInput = document.querySelector(".date-Input"));
+   prev = document.querySelector(".prev"),
+   next = document.querySelector(".next"),
+   todayBtn = document.querySelector(".today-btn"),
+   gotoBtn = document.querySelector(".goto-btn"),
+   dateInput = document.querySelector(".date-Input"),
+   eventDay = document.querySelector(".event-day"),
+   eventDate = document.querySelector(".event-date");
+
 
 let today = new Date();
 let activeDay;
@@ -100,6 +103,8 @@ eventsArr.forEach((eventObj)=>{
         month === new Date().getMonth()
     ) {
 
+        activeDay = i;
+        getActiveDay(i);
         // si se encuentra el evento, agregue también la clase de evento
         // agregar activo hoy al inicio
         if (event) {
@@ -298,17 +303,41 @@ function addLister(){
 }
 //permite mostrar los eventos del día activo y agregar la fecha en la parte superior
 
-const eventDay =document.querySelector(".event-day"),
-  eventDate = document.querySelector(".event-date");
-
 function getActiveDay(date) {
     const day = new Date(year, month, date);
     const dayName = day.toString().split(" ")[0];
     eventDay.innerHTML = dayName;
     eventDate.innerHTML = date + " " + months[month] + " " + year;
 }
-
-
+// function  to show events of that day
+function updateEvents(date) {
+    let event = "";
+    eventsArr.forEach((event) =>{
+        //get events of active day only
+        if (
+            date == event.day && 
+            month + 1 == event.month &&
+            year == event.year
+        ){
+            //then show event on document
+            event.events.forEach((event) => {
+                event +=  `<div class= "event">
+                <div class= "title">
+                <i class= "fas fa-circle"></i>
+                <h3 class="event-title">${event.title}</h3>
+                </div>
+                <div class="event-time">
+                 <span class="event-time">${event.Time}</span>
+                </div>
+             </div> `;
+            });
+        }
+    });
+    //if nothing found
+    if (events =""){
+        event = ` `
+    }
+}
 
 
 

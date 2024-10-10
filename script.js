@@ -7,8 +7,9 @@ const calendar = document.querySelector(".calendar"),
    gotoBtn = document.querySelector(".goto-btn"),
    dateInput = document.querySelector(".date-Input"),
    eventDay = document.querySelector(".event-day"),
-   eventDate = document.querySelector(".event-date");
-
+   eventDate = document.querySelector(".event-date"),
+   eventsContainer = document.querySelector(".events"),
+   addEventSubmit = document.querySelector(".add-event-btn");
 
 let today = new Date();
 let activeDay;
@@ -105,6 +106,7 @@ eventsArr.forEach((eventObj)=>{
 
         activeDay = i;
         getActiveDay(i);
+        updateEvents(i);
         // si se encuentra el evento, agregue también la clase de evento
         // agregar activo hoy al inicio
         if (event) {
@@ -260,6 +262,7 @@ function addLister(){
             activeDay = Number(e.target.innerHTML);
             //llamada activa día después del clic
             getActiveDay(e.target.innerHTML);
+            updateEvents(Number(e.target.innerHTML));
 
             days.forEach((day) => {
                 day.classList.remove("active");
@@ -334,13 +337,89 @@ function updateEvents(date) {
         }
     });
     //if nothing found
-    if (events =""){
-        event = ` `
+    if (events ==""){
+        events = `<div class="no-event"> 
+                  <h3>No Events</h3> </div>`;
     }
+    console.log(events);
+    eventsContainer.innerHTML = events;
 }
+//lets create function  to add events
+addEventSubmit.addEventListener("click", () => {
+    const eventTitle = addEventTitle.value;
+    const eventTimeFrom = addEventFrom.value;
+    const eventTimeTo = addEventTo.value;
+
+    //some valiations
+    if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === ""){
+        alert("Please fill all the fields");
+        return;
+    }
+    const timeFromArr =eventTimeFrom.split(":");
+    const timeToArr = eventTimeTo.split(":");
+
+    if (
+        timeFromArr.lenght === 2 ||
+        timeToArr.lenght === 2 ||
+        timeFromArr[0] > 23 ||
+        timeFromArr[1] > 59 ||
+        timeToArr[0] > 23 ||
+        timeToArr[1] > 59
+    ) {
+       alert("Invalid Time Format");
+    }
+   const timeFrom = converTime(eventTimeFrom);
+   const timeTo =converTime(eventTimeTo);
+
+   const newEvent = {
+    title: eventTitle,
+    time: timeFrom + " - " + timeTo,
+   };
+   let eventAdded = false;
+
+
+   //check if eventsarr not empty
+   if (eventsArr.lenght > 0) {
+    //loop through events array
+    eventsArr.forEach((item) => {
+     if (
+        item.day === activeDay &&
+        item.month === month + 1 &&
+        item.year === year
+       ){
+        item.events.push(newEvent);
+        eventAdded = true;
+       }
+    });
+   }
+   //if event array empty or current day has no event create new
+   if (!eventAdded){
+    eventsArr.push({
+        day: activeDay,
+        month: month + 1,
+        year: year,
+        events: [newEvent],
+    });
+   }
+   //remove active from add event form
+   addEventContainer.classList.remove("active")
+   //clear the fields
+   addEventTitle.value = "";
+   addEventFrom.value = "";
+   addEventTo.value = "";
 
 
 
+});
+function converTime(time) {
+    let timeArr = time.split(":");
+    let timeHour = timeArr[0];
+    let timeMin = timeArr[1];
+    let timeFormat = timeHour >= 12 ? "PM" : "AM";
+    timeHour = timeHour % 12 || 12;
+    time = timeHour + ":" + timeMin + " " + timeFormat;
+    return time;
+}
 
 
 

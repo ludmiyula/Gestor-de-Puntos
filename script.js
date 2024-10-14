@@ -31,38 +31,45 @@ const months = [
     "Diciembre",
 ];
 //EVENTOS PREDETERMINADOS
-const eventsArr = [
-    {
-        day: 27,
-        month: 11,
-        year:2024,
-        events: [
-            {
-                title: "Event 1 lorem ipsum dolar sit genfa",
-                Time: "10:00 AM",
-            },
-            {
-                title:"Event 2",
-                Time:"12:00 PM",
-            },
-        ],
-    },
-    {
-        day: 18,
-        month: 11,
-        year: 2024,
-        events: [
-            {
-                title: "Event 1 lorem ipsum dolar sit genfa",
-                Time: "10:00 AM",
-            },
-            {
-                title: "Event 2",
-                Time: "12:00 PM",
-            },
-        ],
-    },
-];
+//const eventsArr = [
+//  {
+//     day: 27,
+//    month: 11,
+//      year:2024,
+//       events: [
+//          {
+//              title: "Event 1 lorem ipsum dolar sit genfa",
+//              Time: "10:00 AM",
+//            },
+//           {
+//                title:"Event 2",
+//                Time:"12:00 PM",
+//            },
+//        ],
+//    },
+//    {
+//        day: 18,
+//        month: 11,
+//        year: 2024,
+//        events: [
+//            {
+//                title: "Event 1 lorem ipsum dolar sit genfa",
+//                  Time: "10:00 AM",
+//            },
+//            {
+//                title: "Event 2",
+//                Time: "12:00 PM",
+//            },
+//        ],
+//    },
+//];
+// set a empty array
+
+let eventsArr = [];
+
+//them call get
+
+getEvents();
 
 // Agregamos la funcion para dias
 function initCalendar() {  //para obtener los días del mes anterior y el mes actual todos los días y los días del mes siguiente
@@ -341,8 +348,10 @@ function updateEvents(date) {
         events = `<div class="no-event"> 
                   <h3>No Events</h3> </div>`;
     }
-    console.log(events);
     eventsContainer.innerHTML = events;
+// save events when update event called
+   saveEvents();
+
 }
 //lets create function  to add events
 addEventSubmit.addEventListener("click", () => {
@@ -407,8 +416,14 @@ addEventSubmit.addEventListener("click", () => {
    addEventTitle.value = "";
    addEventFrom.value = "";
    addEventTo.value = "";
+  //show current added event
+   updateEvents(activeDay);
 
-
+  // also add event class to newly added day if not already
+  const activeDayElem = document.querySelector(".day.active");
+  if(!activeDayElem.classList.contains("event")) {
+    activeDayElem.classList.add("event");
+  }
 
 });
 function converTime(time) {
@@ -421,8 +436,48 @@ function converTime(time) {
     return time;
 }
 
+// lets create a function  to remove events on click
+eventsContainer.addEventListener("click", (e) => {
+    if (e.target.classList.contains("event")) {
+        const eventTitle = e.target.children[0].children[1].innerHTML;
+        //get the title of event than search in array by title and delete
+        eventsArr.forEach((Event) => {
+            if (
+                Event.day === activeDay &&
+                Event.month === month + 1 &&
+                Event.year === year
+            ) {
+             Event.events.forEach((item,index) =>{
+                if(item.title === eventTitle){
+                    Event.events.splice(index,1);
+                }
+             });
+             //if no event remaing on that dat remove complete day
+             if(Event.events.lenght === 0) {
+                eventsArr.splice(eventsArr.indexOf(Event), 1);
+                //after remove complete day also remove active class  of that day
+                const activeDayElem = document.querySelector(".day.active")
+                if(activeDayElem.classList.contains("event")){
+                  activeDayElem.classList.remove("event");
+                }
+             }
+            }
+        });
+        //AFTER REMOVING FORM ARRAY UPDATE EVENT
+        updateEvents(activeDay); 
+    }
+});
 
+//lets store events in local storage get from there
+function saveEvents() {
+    console.log("yes");
+    localStorage.setItem("events", JSON.stringify(eventsArr));
+}
 
-
-
+function getEvents() {
+    if (localStorage.getItem("events" == null)){
+        return;
+    }
+        eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+}
 

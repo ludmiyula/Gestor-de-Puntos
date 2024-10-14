@@ -344,8 +344,8 @@ function updateEvents(date) {
         }
     });
     //if nothing found
-    if (events ==""){
-        events = `<div class="no-event"> 
+    if (event ==""){
+        event = `<div class="no-event"> 
                   <h3>No Events</h3> </div>`;
     }
     eventsContainer.innerHTML = events;

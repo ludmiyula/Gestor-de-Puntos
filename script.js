@@ -31,38 +31,37 @@ const months = [
     "Diciembre",
 ];
 //EVENTOS PREDETERMINADOS
-//const eventsArr = [
-//  {
-//     day: 27,
-//    month: 11,
-//      year:2024,
-//       events: [
-//          {
-//              title: "Event 1 lorem ipsum dolar sit genfa",
-//              Time: "10:00 AM",
-//            },
-//           {
-//                title:"Event 2",
-//                Time:"12:00 PM",
-//            },
-//        ],
-//    },
-//    {
-//        day: 18,
-//        month: 11,
-//        year: 2024,
-//        events: [
-//            {
-//                title: "Event 1 lorem ipsum dolar sit genfa",
-//                  Time: "10:00 AM",
-//            },
-//            {
-//                title: "Event 2",
-//                Time: "12:00 PM",
-//            },
-//        ],
-//    },
-//];
+const eventsArr = [
+  {
+    day: 16,
+    month: 11,
+      year:2024,
+       events: [
+          {
+             title: "Event 1 lorem ipsum dolar sit genfa",
+              Time: "10:00 AM",
+            },
+           {
+                title:"Event 2",
+                Time:"12:00 PM",
+            },
+        ],
+    },
+    {
+        day: 18,
+        month: 11,
+        year: 2024,
+        events: [
+            {
+                title: "Event 1 lorem ipsum dolar sit genfa",
+                  Time: "10:00 AM",
+            },
+            {
+                title: "Event 2",
+                Time: "12:00 PM",
+            }        ],
+    },
+];
 // set a empty array
 
 let eventsArr = [];
@@ -95,27 +94,44 @@ function initCalendar() {  //para obtener los días del mes anterior y el mes ac
 
      //dia del mes actual
     for ( let i = 1; i <= lastDate; i++) {
+
+        //comprobar si el evento está presente en el día actual
+        let event = false
+        eventsArr.forEach((eventObj) => {
+            if (eventObj.day === i && 
+                eventObj.month === month && 
+                eventObj.year === year
+            ) { //if event found
+                event = true;
+            }
+        });
+
+
      //si el día es hoy agrega clase hoy
-    if(
+      if(
         i === new Date().getDate() &&
         year === new Date().getFullYear() &&
         month === new Date().getMonth()
-    ) {
-        days += `<div class="day today"> ${i} </div>`;
-    }
+      ) {
+        if (event){ 
+        days += `<div class="day today event"> ${i} </div>`;
+      } else{
+            days += `<div class="day today"> ${i} </div>`;
+       }
+     }
     
-    //agregar el resto tal como esta
-    else{
-        //if (event){
-        //days += `<div class="day event"> ${i} </div>`;
-        //} else{
+     //agregar el resto tal como esta
+     else{
+       if (event){
+        days += `<div class="day event"> ${i} </div>`;
+        } else{
             days += `<div class="day "> ${i} </div>`;
-        //}
-      //}
+        }
+      }
     }
-  }
+  
     //dia del proximo mes
-for(let j = 1; j <= nextDays; j++){
+   for(let j = 1; j <= nextDays; j++){
      days += `<div class="day next-date">${j}</div>`;
     }
     daysContainer.innerHTML = days;
@@ -201,9 +217,9 @@ const addEventBtn = document.querySelector(".add-event"),
   addEventFrom = document.querySelector(".event-time-from"),
   addEventTo = document.querySelector(".event-time-to");
 
-  addEventBtn.addEventListener("click", ()=> {
+addEventBtn.addEventListener("click", ()=> {
     addEventContainer.classList.toggle("active");
-  });
+});
 addEventCloseBtn.addEventLisetner("click", () => {
     addEventContainer.classList.remove("active");
 });
@@ -214,12 +230,12 @@ document.addEventListener("click", (e) => {
     }
 });
 //ponemos solo 50 carateres en el titulo
-addEventTitle.addEventListner("input", (e) =>{
+addEventTitle.addEventListener("input", (e) =>{
     addEventTitle.value = addEventTitle.value.slice(0, 50);
-})
+});
 
 //formato de hora en desde y hasta la hora
-addEventFrom.addEventListner("input", (e)=>{
+addEventFrom.addEventListener("input", (e)=>{
     //removercualquier numero
     addEventFrom.value = addEventFrom.value.replace([0 - 9]/g, "");
     //si se ingresan dos números, se agrega automáticamente

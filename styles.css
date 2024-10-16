@@ -26,7 +26,7 @@ border-radius: 10px;
 background-color: #373c4f;
 }
 .left {
-    width: 60%;
+    width: 80%;
     padding: 20%;
 }
 .calendar {
@@ -235,7 +235,7 @@ background-color: #373c4f;
 }
 .today-date .event-date{
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #878895;
 }
 .events {
@@ -262,7 +262,7 @@ background-color: #373c4f;
     cursor: pointer;
     background: linear-gradient(90deg, #3f4458, transparent);
 }
-.events .event:nth-child(event) {
+.events .event:nth-child(even) {
     background: transparent;
 }
 .events .event:hover {
@@ -293,7 +293,7 @@ background-color: #373c4f;
     margin-left: 15px;
     pointer-events: none;
 }
- .events .event::after{
+.events .event::after{
     content: " √";
     position: absolute;
     top: 50%;
@@ -325,7 +325,8 @@ background-color: #373c4f;
     left: 50%;
     width: 90%;
     max-height: 0;
-    overflow: 5px;
+    overflow: hidden;
+    border-radius: 5px;
     background-color: #fff;
     transform: translate(-50%);
     transition: max-height 0.5s;

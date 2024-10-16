@@ -82,59 +82,42 @@ function initCalendar() {  //para obtener los días del mes anterior y el mes ac
     const nextDays = 7 - lastDay.getDay() -1;
 
 
-// actualizar la fecha en la parte superior del calendario
-    date.innerHTML + months[month] + " " + year;
+  // actualizar la fecha en la parte superior del calendario
+    date.innerHTML = months[month] + " " + year;
 
     //sumando los dias hasta domingo
     let days = "";
 
     // dia del mes anterior
     for(let x = day; x > 0; x--){
-        days = `<div class="day prev-date"> ${prevDays - x + 1}</div>`;
+        days = `<div class="day prev-date"> ${prevDays -x + 1}</div>`;
     }
 
-    
-    //dia del mes actual
+     //dia del mes actual
     for ( let i = 1; i <= lastDate; i++) {
-        //COMPROBAR SI evento presente en el día actual
-let event = false
-eventsArr.forEach((eventObj)=>{
-    if(eventObj.day === i && eventObj.month === month && eventObj.year === year){
-        event = true;
-    }
-})
- 
-    //si el día es hoy agrega clase hoy
+     //si el día es hoy agrega clase hoy
     if(
         i === new Date().getDate() &&
         year === new Date().getFullYear() &&
         month === new Date().getMonth()
     ) {
-
-        activeDay = i;
-        getActiveDay(i);
-        updateEvents(i);
-        // si se encuentra el evento, agregue también la clase de evento
-        // agregar activo hoy al inicio
-        if (event) {
-        days += `<div class= "day today  active event" > ${i} </div>`;
-     } else{
-        days += `<div class= "day today active" > ${i} </div>`;
-     }
+        days += `<div class="day today"> ${i} </div>`;
     }
+    
     //agregar el resto tal como esta
     else{
-        if (event){
-        days += `<div class="day event"> ${i} </div>`;
-        } else{
-            days += `<div class="day"> ${i} </div>`;
-        }
-      }
+        //if (event){
+        //days += `<div class="day event"> ${i} </div>`;
+        //} else{
+            days += `<div class="day "> ${i} </div>`;
+        //}
+      //}
     }
+  }
     //dia del proximo mes
-        for(let j = 1; j <= nextDays; j++){
-            days += `<div class="day next-date">${j}</div>`;
-        }
+for(let j = 1; j <= nextDays; j++){
+     days += `<div class="day next-date">${j}</div>`;
+    }
     daysContainer.innerHTML = days;
 }
 
